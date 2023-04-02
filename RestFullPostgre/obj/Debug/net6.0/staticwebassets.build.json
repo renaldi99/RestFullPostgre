@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "XPRzKuyPeL7XP+nbxU2WalhyFWi5TaoVrH7fsfvVRnw=",
+  "Source": "RestFullPostgre",
+  "BasePath": "_content/RestFullPostgre",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

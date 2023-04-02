@@ -1,0 +1,24 @@
+<edeservices>
+
+	<servicegroups>
+		<servicegroup id="default" enabled="true">
+
+			<services>
+
+				<!-- Part 1 -->
+
+				<service name="inquiryAccountSavingsPlan"
+						api="mb21211"
+						method="post"
+						timeout="30"
+						requestfunctor="inquiryAccountSavingsPlan"
+						responsefunctor="response"
+						secure="false"
+						enabled="true" />
+
+				<service name="LN_INQUIRY_LN5000InquiryBalance&Rates_04106" api="mb04106" method="post" timeout="30" requestfunctor="LN_INQUIRY_LN5000InquiryBalance&Rates_04106" responsefunctor="response" secure="false" enabled="true" />
+			</services>
+		</servicegroup>
+	</servicegroups>
+
+</edeservices>
