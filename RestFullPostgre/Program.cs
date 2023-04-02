@@ -24,6 +24,7 @@ builder.Services.AddSingleton<DapperContext>();
 //DI
 builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddTransient<ITrancodeInformationService, TrancodeInformationService>();
+builder.Services.AddTransient<ITrancodeManualService, TrancodeManualService>();
 
 
 var app = builder.Build();

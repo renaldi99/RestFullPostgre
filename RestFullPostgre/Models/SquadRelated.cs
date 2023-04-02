@@ -1,6 +1,6 @@
 ﻿namespace RestFullPostgre.Models
 {
-    public class TrancodeInformationManual
+    public class SquadRelated
     {
     }
 }
