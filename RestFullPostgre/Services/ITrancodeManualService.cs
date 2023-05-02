@@ -8,5 +8,6 @@ namespace RestFullPostgre.Services
     {
         Task<int> InsertTrancodeManual(TrancodeManual entity);
         Task<ResponseEntity> SearchTrancodeManualBy(SearchTrancodeManualDto searchTrancode);
+        Task<bool> CheckTrancodeExist(string paramKey1, string paramKey2);
     }
 }

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestFullPostgre", "RestFullPostgre\RestFullPostgre.csproj", "{0B6BEE68-0976-4590-9F11-ACD04053FF6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestFullPostgre", "RestFullPostgre\RestFullPostgre.csproj", "{0B6BEE68-0976-4590-9F11-ACD04053FF6E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

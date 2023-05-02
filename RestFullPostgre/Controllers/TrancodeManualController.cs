@@ -23,6 +23,11 @@ namespace RestFullPostgre.Controllers
         {
             var res = await _service.InsertTrancodeManual(entity);
 
+            if (res == 2)
+            {
+                return Ok(new DefaultMessage { isSuccess = true, statusCode = StatusCodes.Status200OK, message = "Trancode success updated" });
+            }
+
             return Ok(new DefaultMessage { isSuccess = true, statusCode = StatusCodes.Status200OK, message = "Trancode success created" });
         }
 
@@ -30,6 +35,7 @@ namespace RestFullPostgre.Controllers
         public async Task<ActionResult> SearchTrancodeManual([FromBody] SearchTrancodeManualDto search)
         {
             var res = await _service.SearchTrancodeManualBy(search);
+
 
             return Ok(new PayloadMessage { isSuccess = res.isSuccess, statusCode = StatusCodes.Status200OK, message = res.message, payload = res.data });
         }

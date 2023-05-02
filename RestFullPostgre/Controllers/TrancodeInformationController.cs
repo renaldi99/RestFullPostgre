@@ -78,5 +78,21 @@ namespace RestFullPostgre.Controllers
 
             return Ok(new PayloadMessage { isSuccess = result.isSuccess, statusCode = StatusCodes.Status200OK, message = result.message, payload = result.data });
         }
+
+        [HttpPost("SearchTrancodeInformationJoined")]
+        public async Task<ActionResult> SearchTrancodeInformation([FromBody] SearchTrancodeAttributesDto entity)
+        {
+            var result = await _service.SearchTrancodeInformation(entity);
+
+            return Ok(new PayloadMessage { isSuccess = true, statusCode = StatusCodes.Status200OK, message = "Trancode found", payload = result });
+        }
+
+        [HttpPost("SearchTrancodeInformation")]
+        public async Task<ActionResult> SearchTrancodeInformation([FromBody] SearchTrancodeInformationDto entity)
+        {
+            var result = await _service.SearchTrancodeInformation(entity);
+
+            return Ok(new PayloadMessage { isSuccess = true, statusCode = StatusCodes.Status200OK, message = "Trancode found", payload = result });
+        }
     }
 }
