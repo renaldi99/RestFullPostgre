@@ -55,3 +55,5 @@ C:\Users\dwiag\Documents\dive learning\dive-csharp\RestFullPostgre\RestFullPostg
 C:\Users\dwiag\Documents\dive learning\dive-csharp\RestFullPostgre\RestFullPostgre\obj\Debug\net6.0\RestFullPostgre.pdb
 C:\Users\dwiag\Documents\dive learning\dive-csharp\RestFullPostgre\RestFullPostgre\obj\Debug\net6.0\RestFullPostgre.genruntimeconfig.cache
 C:\Users\dwiag\Documents\dive learning\dive-csharp\RestFullPostgre\RestFullPostgre\obj\Debug\net6.0\ref\RestFullPostgre.dll
+C:\Users\dwiag\Documents\dive learning\dive-csharp\RestFullPostgre\RestFullPostgre\bin\Debug\net6.0\DotNetEnv.dll
+C:\Users\dwiag\Documents\dive learning\dive-csharp\RestFullPostgre\RestFullPostgre\bin\Debug\net6.0\Sprache.dll

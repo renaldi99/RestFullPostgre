@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RestFullPostgre.Dto;
+using RestFullPostgre.Helpers;
 using RestFullPostgre.Message;
 using RestFullPostgre.Models;
 using RestFullPostgre.Services;
@@ -35,7 +36,7 @@ namespace RestFullPostgre.Controllers
 
             var xmlContent = System.IO.File.ReadAllText(@"services.xml");
 
-            XDocument xmlDocument = XDocument.Parse(xmlContent.Replace("&", "&amp;"));
+            XDocument xmlDocument = XDocument.Parse(xmlContent.Replace("&", "&amp;"));  
 
             List<string> listTrancodeName = new List<string>();
             List<Service> serviceList = new List<Service>();
@@ -67,6 +68,38 @@ namespace RestFullPostgre.Controllers
             }
 
             var res = await _service.InsertListTrancode(trancodeInformation);
+
+            return Ok(new DefaultMessage { isSuccess = true, statusCode = StatusCodes.Status200OK, message = "Trancode success created" });
+        }
+
+        [HttpPost("CreateTrancodeInformationv2")]
+        public async Task<ActionResult> CreateTrancodeInformationv2()
+        {
+            string filePath = "services.xml";
+
+            XmlDocument xmlDoc = new XmlDocument();
+            var read = System.IO.File.ReadAllText(filePath);
+            var encode = Utility.EncodeAmpersand(read);
+            xmlDoc.LoadXml(encode);
+
+            string xpathExpression = "//edeservices/servicegroups/servicegroup/services/service";
+
+            XmlNodeList nodes = xmlDoc.SelectNodes(xpathExpression);
+
+            List<string> listTrancodeService = new List<string>();
+
+            foreach (XmlNode node in nodes)
+            {
+                if (node.Attributes != null)
+                {
+                    XmlAttribute attribute = node.Attributes["name"];
+                    if (attribute != null)
+                    {
+                        string attributeValue = attribute.Value;
+                        listTrancodeService.Add(attributeValue);
+                    }
+                }
+            }
 
             return Ok(new DefaultMessage { isSuccess = true, statusCode = StatusCodes.Status200OK, message = "Trancode success created" });
         }
