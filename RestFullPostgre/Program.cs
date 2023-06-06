@@ -38,6 +38,9 @@ builder.Services.AddTransient<ICallerLanguageService, CallerLanguageService>();
 builder.Services.AddTransient<ISquadRelatedService, SquadRelatedService>();
 builder.Services.AddSingleton<HandleExceptionMiddleware>();
 
+// add memory cache
+builder.Services.AddMemoryCache();
+
 
 var app = builder.Build();
 

@@ -6550,11 +6550,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\dwiag\\Documents\\dive learning\\dive-csharp\\RestFullPostgre\\RestFullPostgre\\RestFullPostgre.csproj",
+      "projectUniqueName": "C:\\Users\\dwiag\\Documents\\project-diving\\dive-csharp\\RestFullPostgre\\RestFullPostgre\\RestFullPostgre.csproj",
       "projectName": "RestFullPostgre",
-      "projectPath": "C:\\Users\\dwiag\\Documents\\dive learning\\dive-csharp\\RestFullPostgre\\RestFullPostgre\\RestFullPostgre.csproj",
+      "projectPath": "C:\\Users\\dwiag\\Documents\\project-diving\\dive-csharp\\RestFullPostgre\\RestFullPostgre\\RestFullPostgre.csproj",
       "packagesPath": "C:\\Users\\dwiag\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\dwiag\\Documents\\dive learning\\dive-csharp\\RestFullPostgre\\RestFullPostgre\\obj\\",
+      "outputPath": "C:\\Users\\dwiag\\Documents\\project-diving\\dive-csharp\\RestFullPostgre\\RestFullPostgre\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

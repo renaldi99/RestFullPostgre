@@ -1,6 +1,6 @@
 ﻿namespace RestFullPostgre.Helpers
 {
-    public class Utility
+    public static class Utility
     {
         public static string DecodeSpecialCharacters(string value)
         {
@@ -12,6 +12,9 @@
             return value.Replace("&", "&amp;");
         }
 
-
+        public static IEnumerable<T> Pagination<T>(this IEnumerable<T> datas, int page, int size)
+        {
+            return datas.Skip((page - 1) * size).Take(size).ToList();
+        }
     }
 }

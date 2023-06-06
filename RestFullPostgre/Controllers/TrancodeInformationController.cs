@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using RestFullPostgre.Dto;
 using RestFullPostgre.Helpers;
 using RestFullPostgre.Message;
 using RestFullPostgre.Models;
 using RestFullPostgre.Services;
+using Sprache;
 using System.Reflection.PortableExecutable;
 using System.Xml;
 using System.Xml.Linq;
@@ -17,10 +19,16 @@ namespace RestFullPostgre.Controllers
     public class TrancodeInformationController : ControllerBase
     {
         private readonly ITrancodeInformationService _service;
+        private readonly Pageable<TrancodeInformation> _pageable = new Pageable<TrancodeInformation>();
+        private readonly ILogger<TrancodeManualController> _logger;
+        private readonly IMemoryCache _cache;
 
-        public TrancodeInformationController(ITrancodeInformationService service)
+
+        public TrancodeInformationController(ITrancodeInformationService service, ILogger<TrancodeManualController> logger, IMemoryCache cache)
         {
             _service = service;
+            _logger = logger;
+            _cache = cache;
         }
 
         [HttpPost("CreateTrancodeInformation")]
@@ -31,12 +39,12 @@ namespace RestFullPostgre.Controllers
                 return BadRequest(new { isSuccess = false, status_code = StatusCodes.Status400BadRequest, message = "Invaid Request" });
             }
 
-            
+
             XmlSerializer xml = new XmlSerializer(typeof(EdeServices));
 
             var xmlContent = System.IO.File.ReadAllText(@"services.xml");
 
-            XDocument xmlDocument = XDocument.Parse(xmlContent.Replace("&", "&amp;"));  
+            XDocument xmlDocument = XDocument.Parse(xmlContent.Replace("&", "&amp;"));
 
             List<string> listTrancodeName = new List<string>();
             List<Service> serviceList = new List<Service>();
@@ -73,7 +81,7 @@ namespace RestFullPostgre.Controllers
         }
 
         [HttpPost("CreateTrancodeInformationv2")]
-        public async Task<ActionResult> CreateTrancodeInformationv2()
+        public ActionResult CreateTrancodeInformationv2()
         {
             string filePath = "services.xml";
 
@@ -104,12 +112,44 @@ namespace RestFullPostgre.Controllers
             return Ok(new DefaultMessage { isSuccess = true, statusCode = StatusCodes.Status200OK, message = "Trancode success created" });
         }
 
+        [HttpPost("[action]")]
+        public async Task<ActionResult> GetTrancodeInformation([FromQuery] ParameterPage param)
+        {
+            var result = await _service.GetTrancodeInformation();
+            // pagination with extension method simple
+            //var listCurrentData = result.Pagination<TrancodeInformation>(param.page, param.size);
+
+            // create paging
+            var page = _pageable.ToPageableList(result, param.page, param.size);
+
+
+            return Ok(new PayloadMessage { isSuccess = true, statusCode = StatusCodes.Status200OK, message = "Trancode found", payload = page });
+
+        }
+
         [HttpPost("GetAllTrancodeName")]
         public async Task<ActionResult> GetAllTrancodeName()
         {
-            var result = await _service.GetAllTrancodeName();
+            if (_cache.TryGetValue("AllTrancodeName", out List<TrancodeNameDto> listTrancodeName))
+            {
+                listTrancodeName = (List<TrancodeNameDto>)_cache.Get("AllTrancodeName");
 
-            return Ok(new PayloadMessage { isSuccess = result.isSuccess, statusCode = StatusCodes.Status200OK, message = result.message, payload = result.data });
+                _logger.Log(LogLevel.Information, "list found in cache.");
+
+                return Ok(new PayloadMessage { isSuccess = true, statusCode = StatusCodes.Status200OK, message = "Trancode name successfully found", payload = listTrancodeName });
+            }
+            
+            var getAllTrancodeName = await _service.GetAllTrancodeName();
+
+            var cacheEntryOptions = new MemoryCacheEntryOptions()
+                    .SetSlidingExpiration(TimeSpan.FromSeconds(60))
+                    .SetAbsoluteExpiration(TimeSpan.FromSeconds(3600))
+                    .SetPriority(CacheItemPriority.Normal)
+                    .SetSize(1024);
+
+            _cache.Set("AllTrancodeName", getAllTrancodeName, cacheEntryOptions);
+
+            return Ok(new PayloadMessage { isSuccess = true, statusCode = StatusCodes.Status200OK, message = "Trancode name successfully found", payload = getAllTrancodeName });
         }
 
         [HttpPost("SearchTrancodeInformationJoined")]

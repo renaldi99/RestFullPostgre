@@ -2,6 +2,7 @@
 using RestFullPostgre.Message;
 using RestFullPostgre.Models;
 using RestFullPostgre.Repositories;
+using Sprache;
 
 namespace RestFullPostgre.Services.Impl
 {
@@ -38,7 +39,7 @@ namespace RestFullPostgre.Services.Impl
             }
         }
 
-        public async Task<ResponseEntity> GetAllTrancodeName()
+        public async Task<List<TrancodeNameDto>> GetAllTrancodeName()
         {
             try
             {
@@ -50,10 +51,33 @@ namespace RestFullPostgre.Services.Impl
                     throw new Exception("Trancode name not found");
                 }
 
-                var listNameTrancode = result.Select(x 
-                    => new TrancodeNameDto { name_trancode = x.name_trancode }).ToList();
+                var listNameTrancode = result.Select(x => new TrancodeNameDto 
+                { 
+                    name_trancode = x.name_trancode 
+                }).ToList();
 
-                return new ResponseEntity { isSuccess = true, data = listNameTrancode, message = "Trancode name found" };
+                return listNameTrancode;
+            }
+            catch (Exception err)
+            {
+                throw new Exception(err.Message);
+            }
+        }
+
+        public async Task<List<TrancodeInformation>> GetTrancodeInformation()
+        {
+            try
+            {
+                string query = $"select * from trancode_catalog.tc_master_information";
+
+                var getAllTrancodeInformation = await _repository.FindAllByAsync(query, new { });
+
+                if (getAllTrancodeInformation.Count == 0)
+                {
+                    throw new Exception("Trancode not found");
+                }
+
+                return getAllTrancodeInformation;
             }
             catch (Exception err)
             {

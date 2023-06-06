@@ -12,10 +12,12 @@ namespace RestFullPostgre.Controllers
     public class TrancodeManualController : ControllerBase
     {
         private readonly ITrancodeManualService _service;
+        private readonly ILogger<TrancodeManualController> _logger;
 
-        public TrancodeManualController(ITrancodeManualService service)
+        public TrancodeManualController(ITrancodeManualService service, ILogger<TrancodeManualController> logger)
         {
             _service = service;
+            _logger = logger;
         }
 
         [HttpPost("CreateTrancodeManual")]
@@ -35,7 +37,6 @@ namespace RestFullPostgre.Controllers
         public async Task<ActionResult> SearchTrancodeManual([FromBody] SearchTrancodeManualDto search)
         {
             var res = await _service.SearchTrancodeManualBy(search);
-
 
             return Ok(new PayloadMessage { isSuccess = res.isSuccess, statusCode = StatusCodes.Status200OK, message = res.message, payload = res.data });
         }
