@@ -1,6 +1,6 @@
 ﻿namespace RestFullPostgre.Helpers
 {
-    public static class Utility
+    public static class CommonUtils
     {
         public static string DecodeSpecialCharacters(string value)
         {

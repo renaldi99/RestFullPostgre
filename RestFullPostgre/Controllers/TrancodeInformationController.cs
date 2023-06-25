@@ -87,7 +87,7 @@ namespace RestFullPostgre.Controllers
 
             XmlDocument xmlDoc = new XmlDocument();
             var read = System.IO.File.ReadAllText(filePath);
-            var encode = Utility.EncodeAmpersand(read);
+            var encode = CommonUtils.EncodeAmpersand(read);
             xmlDoc.LoadXml(encode);
 
             string xpathExpression = "//edeservices/servicegroups/servicegroup/services/service";
@@ -120,7 +120,9 @@ namespace RestFullPostgre.Controllers
             //var listCurrentData = result.Pagination<TrancodeInformation>(param.page, param.size);
 
             // create paging
-            var page = _pageable.ToPageableList(result, param.page, param.size);
+            int numPage = param.page;
+            int numSize = param.size;
+            var page = _pageable.ToPageableList(result, numPage, numSize);
 
 
             return Ok(new PayloadMessage { isSuccess = true, statusCode = StatusCodes.Status200OK, message = "Trancode found", payload = page });
@@ -142,8 +144,8 @@ namespace RestFullPostgre.Controllers
             var getAllTrancodeName = await _service.GetAllTrancodeName();
 
             var cacheEntryOptions = new MemoryCacheEntryOptions()
-                    .SetSlidingExpiration(TimeSpan.FromSeconds(60))
-                    .SetAbsoluteExpiration(TimeSpan.FromSeconds(3600))
+                    .SetSlidingExpiration(TimeSpan.FromSeconds(30))
+                    .SetAbsoluteExpiration(TimeSpan.FromSeconds(60))
                     .SetPriority(CacheItemPriority.Normal)
                     .SetSize(1024);
 
